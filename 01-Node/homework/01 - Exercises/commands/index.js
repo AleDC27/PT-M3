@@ -2,20 +2,62 @@ const fs = require("fs");
 const utils = require("../utils/request");
 const process = require("process");
 
-function pwd() {}
+console.log(123324)
 
-function date() {}
+function pwd(print) {
+    print(process.cwd())
+}
 
-function echo() {}
+function date(print) {
+    print(Date())
+}
 
-function ls() {}
+function echo(print,args) {
+    print(args)
+}
 
-function cat() {}
+function ls(print) {
+    fs.readdir('.',(error,files)=>{
+        if(error)throw Error (error);
+        print(files.join(' '))
+    })
+}
 
-function head() {}
+function cat(print,args) {
+    fs.readFile(args,'utf-8',(error,data)=>{
+        if(error)throw Error(error);
+        print(data)
+    })
+}
 
-function tail() {}
+function head(print,args) {
+    fs.readFile(args,'utf-8',(error,data)=>{
+        if(error)throw Error(error);
+        print(data.split('\n').shift())
+    })
+}
 
-function curl() {}
+function tail(print,args) {
+    fs.readFile(args,'utf-8',(error,data)=>{
+        if(error)throw Error(error);
+        print(data.split(' ').pop())
+    })
+}
 
-module.exports = {};
+function curl(print,args) {
+    utils.request(args,(error,response)=>{
+        if(error)throw Error(error);
+        print(response)
+    })
+}
+
+module.exports = {
+    pwd,
+    date,
+    echo,
+    ls,
+    cat,
+    head,
+    tail,
+    curl
+};
